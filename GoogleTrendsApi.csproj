@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Title>Api for GoogleTrends.</Title>
+    <PackageIcon>trends image.png</PackageIcon>
+    <Description>Easy data retrieval from the Google Trends API, with no dependencies.</Description>
+    <PackageTags>Trends; GoogleTrends;</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <Version>2.1</Version>
+    <Authors>Isascar chatav</Authors>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/isascarc/GoogleTrends/tree/master/GoogleTrendsApi</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\source\repos\GoogleTrendsApi\GoogleTrendsApi\trends image.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReadMe.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
