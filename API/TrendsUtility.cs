@@ -16,6 +16,7 @@ class TrendsUtility
         return data.Length > 0 ? JsonSerializer.Deserialize<TrendsRespond>(data) : new TrendsRespond();
     }
 
+
     public async Task<CookieContainer> GetCookie(Uri url)
     {
         var cookieContainer = new CookieContainer();
