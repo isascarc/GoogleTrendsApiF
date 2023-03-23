@@ -8,7 +8,7 @@ namespace GoogleTrendsApi;
 class TrendsUtility
 {
     const int CharsToTrim = 5;
-    public async Task<TrendsRespond?> getTrendsRespondSolicitud(Query solicitud)
+    public async Task<TrendsRespond> getTrendsRespondSolicitud(Query solicitud)
     {
         Uri url = new Uri($"https://trends.google.com/trends/api/explore?req={JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300");
         var Cookie = await GetCookie(url);
