@@ -33,10 +33,10 @@ internal class TrendsGetData
     public TrendsGetData(TrendsRespond RespondSolicitud)
     {
         var req = RespondSolicitud.widgets[0].request;
-        this.time = req.time;
-        this.resolution = req.resolution;
-        this.locale = req.locale;
-        this.comparisonItem = new List<ComparisonItem>();
+        time = req.time;
+        resolution = req.resolution;
+        locale = req.locale;
+        comparisonItem = new List<ComparisonItem>();
 
         // Add all expressions to list.
         foreach (var item in req.comparisonItem)
@@ -54,12 +54,12 @@ internal class TrendsGetData
             this.comparisonItem.Add(comparisonItem);
         }
 
-        this.requestOptions = new TrendsGetData.RequestOptions();
-        this.requestOptions.property = req.requestOptions.property;
-        this.requestOptions.backend = req.requestOptions.backend;
-        this.userConfig = new TrendsGetData.UserConfig();
-        this.userConfig.userType = req.userConfig.userType;
-        this.token = RespondSolicitud.widgets[0].token;
+        requestOptions = new RequestOptions();
+        requestOptions.property = req.requestOptions.property;
+        requestOptions.backend = req.requestOptions.backend;
+        userConfig = new UserConfig();
+        userConfig.userType = req.userConfig.userType;
+        token = RespondSolicitud.widgets[0].token;
     }
 
     public async Task<string> getTrendsJsonResponseAsync()

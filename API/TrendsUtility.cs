@@ -8,14 +8,23 @@ namespace GoogleTrendsApi;
 class TrendsUtility
 {
     const int CharsToTrim = 5;
-    public async Task<TrendsRespond> getTrendsRespondSolicitud(Query solicitud)
+    public async Task<TrendsRespond> GetTrendsRespondSolicitud(Query solicitud)
     {
         Uri url = new Uri($"https://trends.google.com/trends/api/explore?req={JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300");
         var Cookie = await GetCookie(url);
-        var data = await GetData(url, Cookie);
+        var data = await GetData(url, Cookie,false);
         return data.Length > 0 ? JsonSerializer.Deserialize<TrendsRespond>(data) : new TrendsRespond();
     }
 
+
+    public string GetTrendingSearches(string Country = "united_states")
+    {
+        Uri url = new Uri($"https://trends.google.com/trends/hottrends/visualize/internal/data?req={Country}");
+        var Cookie =  GetCookie(url).Result;
+        var data =  GetData(url, Cookie).Result;
+        return data;
+        //return data.Length > 0 ? JsonSerializer.Deserialize<TrendingSearches>(data) : new TrendingSearches();
+    }
 
     public async Task<CookieContainer> GetCookie(Uri url)
     {
@@ -32,7 +41,7 @@ class TrendsUtility
         }
     }
 
-    public async Task<string> GetData(Uri url, CookieContainer cookies = null)
+    public async Task<string> GetData(Uri url, CookieContainer cookies = null, bool trim=true)
     {
         using (var handler = new HttpClientHandler() { CookieContainer = cookies ?? new CookieContainer() })
         using (var client = new HttpClient(handler) { })
@@ -43,7 +52,7 @@ class TrendsUtility
             request.Headers.Add("Host", url.Host);
             var a = await client.SendAsync(request);
             var b = await a.Content.ReadAsStringAsync();
-            string clearResult = b.Substring(CharsToTrim);
+            string clearResult =trim? b.Substring(CharsToTrim):b;
             return cookies is null ? GetDataFinal(clearResult) : clearResult;
         }
     }
