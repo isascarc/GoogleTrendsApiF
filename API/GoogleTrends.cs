@@ -43,18 +43,25 @@ public static class Api
         => FetchDataAsStringAsync(keyword, geo, time).Result;
 
     //
-    public static async Task<string> FetchDataAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
-         => FetchDataAsStringAsync(keyword, geo, time).Result;
+    //public static async Task<string> FetchDataAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
+    //     => FetchDataAsStringAsync(keyword, geo, time).Result;
 
-    // 
-    public static string FetchData(string[] keyword, string geo = "", string time = LastFiveYears)
-         => FetchDataAsStringAsync(keyword, geo, time).Result;
+    //// 
+    //public static string FetchData(string[] keyword, string geo = "", string time = LastFiveYears)
+    //     => FetchDataAsStringAsync(keyword, geo, time).Result;
 
-    public static JsonArray GetTrendingSearches(string searchVal = "israel")
+    public static JsonObject GetAllTrendingSearches()
     {
         var gg = new TrendsUtility().GetTrendingSearches();
-        var result = JsonNode.Parse("{\"" + gg)?.AsObject();
-        var ry = result.ContainsKey(searchVal) ? result[searchVal].AsArray() : new JsonArray();
-        return ry;
+        var result = JsonNode.Parse("{\"Uni" + gg)?.AsObject();
+        return result;
+    }
+
+    public static JsonArray GetTrendingSearches(string searchVal = "United_states")
+    {
+        var gg = new TrendsUtility().GetTrendingSearches();
+        var result = JsonNode.Parse("{\"Uni" + gg)?.AsObject();
+        var res = result.ContainsKey(searchVal) ? result[searchVal].AsArray() : new JsonArray();
+        return res;
     }
 }
