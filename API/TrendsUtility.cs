@@ -12,7 +12,7 @@ class TrendsUtility
     {
         Uri url = new Uri($"https://trends.google.com/trends/api/explore?req={JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300");
         var Cookie = await GetCookie(url);
-        var data = await GetData(url, Cookie,false);
+        var data = await GetData(url, Cookie);
         return data.Length > 0 ? JsonSerializer.Deserialize<TrendsRespond>(data) : new TrendsRespond();
     }
 

@@ -10,12 +10,12 @@ This is a library for receiving data from trends into the .net environment, easi
 ## Get trends
 You simply call the function like this:
 ```csharp
-await Api.FetchDataAsStringAsync(new[] { "angular", "react" });
+await Api.FetchDataAsync(new[] { "angular", "react" });
 ```
 
 or, if we want to do it synchronously:
 ```csharp
-await Api.FetchDataAsString(new[] { "angular", "react" });
+await Api.FetchData(new[] { "angular", "react" });
 ```
 
 ## Trending searches

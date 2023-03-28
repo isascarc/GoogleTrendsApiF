@@ -9,21 +9,18 @@
     <PackageTags>Trends; GoogleTrends;</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-    <Version>2.1</Version>
+    <Version>2.2.3</Version>
     <Authors>Isascar chatav</Authors>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/isascarc/GoogleTrends/tree/master/GoogleTrendsApi</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\source\repos\GoogleTrendsApi\GoogleTrendsApi\trends image.png">
+    <None Update="ReadMe.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ReadMe.md">
+    <None Update="trends image.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
