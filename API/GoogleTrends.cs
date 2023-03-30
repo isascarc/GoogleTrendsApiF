@@ -32,23 +32,27 @@ public static class Api
 
     #endregion
 
-    private static async Task<string> FetchDataAsStringAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
+    //public static async Task<string> FetchDataAsStringAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
+    //{
+    //    var RespondSolicitud = await new TrendsUtility().GetTrendsRespondSolicitud(new Query(geo, time, keyword));
+    //    var ret = new TrendsGetData(RespondSolicitud);
+    //    return await ret.getTrendsJsonResponseAsync();
+    //}
+
+    //private static string FetchDataAsString(string[] keyword, string geo = "", string time = LastFiveYears)
+    //    => FetchDataAsStringAsync(keyword, geo, time).Result;
+
+    //
+    public static async Task<JsonNode> FetchDataAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
     {
         var RespondSolicitud = await new TrendsUtility().GetTrendsRespondSolicitud(new Query(geo, time, keyword));
         var ret = new TrendsGetData(RespondSolicitud);
-        return await ret.getTrendsJsonResponseAsync();
+        return JsonNode.Parse(await ret.getTrendsJsonResponseAsync());
     }
-
-    private static string FetchDataAsString(string[] keyword, string geo = "", string time = LastFiveYears)
-        => FetchDataAsStringAsync(keyword, geo, time).Result;
-
-    //
-    public static async Task<string> FetchDataAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
-         => FetchDataAsStringAsync(keyword, geo, time).Result;
 
     // 
     public static JsonNode FetchData(string[] keyword, string geo = "", string time = LastFiveYears)
-         => JsonNode.Parse(FetchDataAsString(keyword, geo, time));
+         => FetchDataAsync(keyword, geo, time).Result;
 
     public static JsonObject GetAllTrendingSearches()
     {
