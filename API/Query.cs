@@ -1,4 +1,6 @@
-﻿namespace GoogleTrendsApi;
+﻿using static GoogleTrendsApi.Api;
+
+namespace GoogleTrendsApi;
 
 public class Query
 {
@@ -13,8 +15,10 @@ public class Query
         public string time { get; set; }
     }
 
-    public Query(string geo, string time, string[] keyword)
+    public Query(string geo, string time, string[] keyword,int cat, string proper )
     {
+        category = cat;
+        property = proper;
         comparisonItem = new List<ComparisonItem>();
         foreach (var item in keyword)
             comparisonItem.Add(new ComparisonItem() { keyword = item, geo = geo, time = time });

@@ -57,6 +57,7 @@ internal class TrendsGetData
         requestOptions = new RequestOptions();
         requestOptions.property = req.requestOptions.property;
         requestOptions.backend = req.requestOptions.backend;
+        requestOptions.category = req.requestOptions.category;
         userConfig = new UserConfig();
         userConfig.userType = req.userConfig.userType;
         token = RespondSolicitud.widgets[0].token;
@@ -64,7 +65,7 @@ internal class TrendsGetData
 
     public async Task<string> getTrendsJsonResponseAsync()
     {
-        Uri dataUri = new Uri($"{baseUrl}multiline/json?req={JsonSerializer.Serialize(this)}&token={this.token}&tz=300");
+        Uri dataUri = new Uri($"{baseUrl}multiline/json?req={JsonSerializer.Serialize(this)}&token={token}&tz=300&cat=3");
         return await new TrendsUtility().GetData(dataUri);
     }
 
