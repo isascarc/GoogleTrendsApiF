@@ -1,6 +1,6 @@
 ﻿
-# Google trends API 2.2.3
-[![NuGet version (GoogleTrendsApi)](https://img.shields.io/nuget/v/GoogleTrendsApi.svg?style=flat-square)](https://www.nuget.org/packages/GoogleTrendsApi/)
+# Google trends API 2.2.4
+[![NuGet version (GoogleTrendsApi)](https://img.shields.io/nuget/v/GoogleTrendsApi.svg)](https://www.nuget.org/packages/GoogleTrendsApi/)
 
 This is a library for receiving data from trends into the .net environment, easily, and **without dependencies**!
 
@@ -10,22 +10,29 @@ This is a library for receiving data from trends into the .net environment, easi
 ## Get trends
 You simply call the function like this:
 ```csharp
-await Api.FetchDataAsync(new[] { "angular", "react" });
+Api.FetchData(new[] { "react", "angular" });
 ```
 
-or, if we want to do it synchronously:
+And also possible with parameters:
 ```csharp
-await Api.FetchData(new[] { "angular", "react" });
+Api.FetchData(new[] { "react", "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube)
 ```
+
 
 ## Trending searches
-
 Get all trending searches:
 ```csharp
 Api.GetAllTrendingSearches()
 ```
 
-Get trending searches by country(israel, in this example):
+Get trending searches by country (israel, in this example):
 ```csharp
 Api.GetTrendingSearches("israel");
+```
+
+## Categories list
+
+For get list of all categories, use:
+```csharp
+Api.GetCategories()
 ```
