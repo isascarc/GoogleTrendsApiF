@@ -10,6 +10,7 @@ using System.ComponentModel;
 namespace GoogleTrendsApi;
 
 #region searchOptions
+
 // These are all the options offered by Google trends.
 public enum DateOptions
 {
@@ -46,43 +47,18 @@ public enum GroupOptions
     [Description("froogle")]
     froogle
 }
+
 #endregion
 
 public static class Api
 {
-    //public static async Task<string> FetchDataAsStringAsync(string[] keyword, string geo = "", string time = LastThreeMonths)
-    //{
-    //    var RespondSolicitud = await new TrendsUtility().GetTrendsRespondSolicitud(new Query(geo, time, keyword));
-    //    var ret = new TrendsGetData(RespondSolicitud);
-    //    return await ret.getTrendsJsonResponseAsync();
-    //}
-    //private static string FetchDataAsString(string[] keyword, string geo = "", string time = LastFiveYears)
-    //    => FetchDataAsStringAsync(keyword, geo, time).Result;
-
-    //
-
-    /// <summary>
-    /// Gets an Description attribute on an enum field value
-    /// </summary>
-    static string GetDescription(this Enum enumVal)
-    {
-        var type = enumVal.GetType();
-        var memInfo = type.GetMember(enumVal.ToString());
-        var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-        return (attributes.Length > 0) ? ((DescriptionAttribute)attributes[0]).Description : "";
-    }
-
-
     public static async Task<JsonNode> FetchData(string[] keyword, string geo = "", DateOptions time = DateOptions.LastHour,
-        GroupOptions group = GroupOptions.All, int category = 14)
+        GroupOptions group = GroupOptions.All, int category = 0)
     {
-        var r = time.GetDescription();
         var RespondSolicitud = await new TrendsUtility().GetTrendsRespondSolicitud(new Query(geo, time.GetDescription(), keyword, category, group.GetDescription()));
-        //var RespondSolicitud = await new TrendsUtility().GetTrendsRespondSolicitud(new Query(geo, "", keyword, category, group.GetDescription()));
         var ret = new TrendsGetData(RespondSolicitud);
         return JsonNode.Parse(await ret.getTrendsJsonResponseAsync());
     }
-
 
     public async static Task<JsonObject> GetAllTrendingSearches()
     {
@@ -100,10 +76,17 @@ public static class Api
     /// Request data from Google Daily Trends section.
     /// </summary>
     /// <returns></returns>                         
-    public static JsonArray TodaySearches()
+    public static async Task<JsonArray> GetTodaySearches(string geo = "US")
     {
-        var gg = (new TrendsUtility().GetTodaySearches()).Result;
-        return JsonNode.Parse(gg)?["default"]["trendingSearchesDays"].AsArray()[0]["trendingSearches"].AsArray();
+        var gg = await (new TrendsUtility().GetTodaySearches(geo));
+        return JsonNode.Parse(gg)?["default"]["trendingSearchesDays"][0]["trendingSearches"].AsArray();
+    }
+
+    public static async Task<JsonArray> GetRelatedQueries(string[] keyword, string geo = "", DateOptions time = DateOptions.LastThreeMonths,
+        GroupOptions group = GroupOptions.All, int category = 14)
+    {
+        return await new TrendsUtility()
+            .GetTrendsRelated(new Query(geo, time.GetDescription(), keyword, category, group.GetDescription()));
     }
 
     /// <summary>
@@ -113,5 +96,16 @@ public static class Api
     public static async Task<string> GetCategories()
     {
         return await new TrendsUtility().Categories();
+    }
+
+    /// <summary>
+    /// Gets an Description attribute on an enum field value
+    /// </summary>
+    private static string GetDescription(this Enum enumVal)
+    {
+        var type = enumVal.GetType();
+        var memInfo = type.GetMember(enumVal.ToString());
+        var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+        return (attributes.Length > 0) ? ((DescriptionAttribute)attributes[0]).Description : "";
     }
 }

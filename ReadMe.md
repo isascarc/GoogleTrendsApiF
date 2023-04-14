@@ -15,14 +15,14 @@ Api.FetchData(new[] { "react", "angular" });
 
 And also possible with parameters:
 ```csharp
-Api.FetchData(new[] { "react", "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube)
+Api.FetchData(new[] { "react", "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube);
 ```
 
 
 ## Trending searches
 Get all trending searches:
 ```csharp
-Api.GetAllTrendingSearches()
+Api.GetAllTrendingSearches();
 ```
 
 Get trending searches by country (israel, in this example):
@@ -30,9 +30,28 @@ Get trending searches by country (israel, in this example):
 Api.GetTrendingSearches("israel");
 ```
 
+## Today searches
+Get all Today searches, by country:
+```csharp
+Api.GetTodaySearches("US");
+```
+
+
+## Related queries
+Get all trending searches.
+You can enter a query, filter by category, time, country, and group for search ('images', 'news', etc.). For example:
+```csharp
+Api.GetRelatedQueries (new string[] { "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube ,3);
+```
+
+Also, you can also not enter any query, and just search according to the other categories:
+```csharp
+ Api.GetRelatedQueries (new string[] { "" }, "US", DateOptions.LastThreeMonths);
+```
+
 ## Categories list
 
 For get list of all categories, use:
 ```csharp
-Api.GetCategories()
+Api.GetCategories();
 ```

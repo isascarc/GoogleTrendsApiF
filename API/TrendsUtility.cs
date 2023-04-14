@@ -11,46 +11,73 @@ class TrendsUtility
 {
     const string baseTrendsUrl = "https://trends.google.com/trends";
 
-    const string GENERAL_URL = $"{baseTrendsUrl}/api/explore";
+    const string generalUrl = $"{baseTrendsUrl}/api/explore";
     const string INTEREST_OVER_TIME_URL = $"{baseTrendsUrl}/api/widgetdata/multiline";
     const string MULTIRANGE_INTEREST_OVER_TIME_URL = $"{baseTrendsUrl}/api/widgetdata/multirange";
     const string INTEREST_BY_REGION_URL = $"{baseTrendsUrl}/api/widgetdata/comparedgeo";
-    const string RELATED_QUERIES_URL = $"{baseTrendsUrl}/api/widgetdata/relatedsearches";
-    const string TRENDING_SEARCHES_URL = $"{baseTrendsUrl}/hottrends/visualize/internal/data";
+    const string relatedQueriesUrl = $"{baseTrendsUrl}/api/widgetdata/relatedsearches";
+    const string trendingSearchesUrl = $"{baseTrendsUrl}/hottrends/visualize/internal/data";
     const string TOP_CHARTS_URL = $"{baseTrendsUrl}/api/topcharts";
     const string SUGGESTIONS_URL = $"{baseTrendsUrl}/api/autocomplete/";
-    const string CATEGORIES_URL = $"{baseTrendsUrl}/api/explore/pickers/category";
-    const string TODAY_SEARCHES_URL = $"{baseTrendsUrl}/api/dailytrends";
+    const string categoriesUrl = $"{baseTrendsUrl}/api/explore/pickers/category";
+    const string todaySearchesUrl = $"{baseTrendsUrl}/api/dailytrends";
     const string REALTIME_TRENDING_SEARCHES_URL = $"{baseTrendsUrl}/api/realtimetrends";
 
-    const int CharsToTrim = 5;
+    const int NormalCharsToTrim = 5;
 
 
     public async Task<TrendsRespond> GetTrendsRespondSolicitud(Query solicitud)
     {
-        var resA = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" + //"cat=13&date=today 1-m&geo=IL"));
-            $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"),5);
-        return resA.Length > 0 ? JsonSerializer.Deserialize<TrendsRespond>(resA) : new TrendsRespond();
+        var res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" + //"cat=13&date=today 1-m&geo=IL"));
+            $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), NormalCharsToTrim);
+        return res.Length > 0 ? JsonSerializer.Deserialize<TrendsRespond>(res) : new TrendsRespond();
     }
+
+    public async Task<string> GetTrends2(Query solicitud)
+    {
+        var res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
+           $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), NormalCharsToTrim);
+        return res;
+    }
+
+    public async Task<JsonArray> GetTrendsRelated(Query solicitud)
+    {
+        var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
+           $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), NormalCharsToTrim);
+        var res = JsonNode.Parse(_res);
+        var r = res["widgets"][2];
+        var relatedQueries =await  GetCookiesAndData(new Uri(relatedQueriesUrl + $"?token={r["token"]}&req={r["request"]}"), NormalCharsToTrim);
+        return JsonNode.Parse(relatedQueries)["default"]["rankedList"].AsArray();
+    }
+
+
 
     public async Task<string> GetTrendingSearches()
     {
-        return await GetCookiesAndData(new Uri(TRENDING_SEARCHES_URL));
+        return await GetCookiesAndData(new Uri(trendingSearchesUrl));
     }
 
-    public async Task<string> GetTodaySearches(string geo = "US",string hl= "en-US")
+    public async Task<string> GetTodaySearches(string geo = "US", string hl = "en-US")
     {
-        return await GetCookiesAndData(new Uri($"{TODAY_SEARCHES_URL}?ns=15&geo={geo}&tz=-180&hl={hl}"), 5); //title.query
+        return await GetCookiesAndData(new Uri($"{todaySearchesUrl}?ns=15&geo={geo}&tz=-180&hl={hl}"), NormalCharsToTrim); //title.query
     }
-    
+
     public async Task<string> Categories()
     {
-        return await GetCookiesAndData(new Uri(CATEGORIES_URL + $"?hl=en-US"), 5); //title.query
+        return await GetCookiesAndData(new Uri(categoriesUrl + $"?hl=en-US"), NormalCharsToTrim); //title.query
     }
-     
 
 
 
+
+
+
+
+
+
+    //--------------------------------------
+    //--------------------------------------
+    //--------------------------------------
     public async Task<string> GetCookiesAndData(Uri url, int trimChars = 0)
     {
         var cookieContainer = new CookieContainer();
@@ -78,6 +105,8 @@ class TrendsUtility
         }
     }
 
+
+
     public async Task<string> GetData(Uri url, CookieContainer cookies = null, bool trim = true)
     {
         using (var handler = new HttpClientHandler() { CookieContainer = cookies ?? new CookieContainer() })
@@ -89,7 +118,7 @@ class TrendsUtility
             request.Headers.Add("Host", url.Host);
             var a = await client.SendAsync(request);
             var b = await a.Content.ReadAsStringAsync();
-            string clearResult = b[CharsToTrim..];
+            string clearResult = b[NormalCharsToTrim..];
             return cookies is null ? GetDataFinal(clearResult) : clearResult;
         }
     }
