@@ -83,10 +83,17 @@ public static class Api
     }
 
     public static async Task<JsonArray> GetRelatedQueries(string[] keyword, string geo = "", DateOptions time = DateOptions.LastThreeMonths,
-        GroupOptions group = GroupOptions.All, int category = 14)
+        GroupOptions group = GroupOptions.All, int category = 0)
     {
         return await new TrendsUtility()
-            .GetTrendsRelated(new Query(geo, time.GetDescription(), keyword, category, group.GetDescription()));
+            .GetRelated(new Query(geo, time.GetDescription(), keyword, category, group.GetDescription()));
+    }
+
+    public static async Task<JsonArray> GetRelatedTopics(string[] keyword, string geo = "", DateOptions time = DateOptions.LastThreeMonths,
+    GroupOptions group = GroupOptions.All, int category = 0)
+    {
+        return await new TrendsUtility()
+            .GetRelated(new Query(geo, time.GetDescription(), keyword, category, group.GetDescription()), 0);
     }
 
     /// <summary>

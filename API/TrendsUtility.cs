@@ -40,14 +40,24 @@ class TrendsUtility
         return res;
     }
 
-    public async Task<JsonArray> GetTrendsRelated(Query solicitud)
+    /// <summary>
+    /// Get related queries / topics (by widget parameter).
+    /// </summary>
+    /// <param name="solicitud"></param>
+    /// <param name="widget"> 1 for topics, 2 for queries.</param>
+    /// <returns></returns>
+    public async Task<JsonArray> GetRelated(Query solicitud, int widget = 1)
     {
+        var options = new string[] { "RELATED_TOPICS", "RELATED_QUERIES" };
+
         var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
            $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), NormalCharsToTrim);
-        var res = JsonNode.Parse(_res);
-        var r = res["widgets"][2];
-        var relatedQueries =await  GetCookiesAndData(new Uri(relatedQueriesUrl + $"?token={r["token"]}&req={r["request"]}"), NormalCharsToTrim);
-        return JsonNode.Parse(relatedQueries)["default"]["rankedList"].AsArray();
+
+        var widgets = JsonNode.Parse(_res)["widgets"].AsArray();
+        var res1 = widgets.FirstOrDefault(x => x["id"].ToString() == options[widget]);
+
+        var relateds = await GetCookiesAndData(new Uri(relatedQueriesUrl + $"?token={res1["token"]}&req={res1["request"]}"), NormalCharsToTrim);
+        return JsonNode.Parse(relateds)["default"]["rankedList"].AsArray();
     }
 
 
@@ -62,9 +72,9 @@ class TrendsUtility
         return await GetCookiesAndData(new Uri($"{todaySearchesUrl}?ns=15&geo={geo}&tz=-180&hl={hl}"), NormalCharsToTrim); //title.query
     }
 
-    public async Task<string> Categories()
+    public async Task<string> Categories(string hl = "en-US")
     {
-        return await GetCookiesAndData(new Uri(categoriesUrl + $"?hl=en-US"), NormalCharsToTrim); //title.query
+        return await GetCookiesAndData(new Uri($"{categoriesUrl}?hl={hl}"), NormalCharsToTrim);
     }
 
 

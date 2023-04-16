@@ -1,5 +1,5 @@
 ﻿
-# Google trends API 2.2.4
+# Google trends API 2.3
 [![NuGet version (GoogleTrendsApi)](https://img.shields.io/nuget/v/GoogleTrendsApi.svg)](https://www.nuget.org/packages/GoogleTrendsApi/)
 
 This is a library for receiving data from trends into the .net environment, easily, and **without dependencies**!
