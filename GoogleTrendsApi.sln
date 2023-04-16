@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleTrendsApi", "GoogleTrendsApi.csproj", "{86EF4FDA-1C33-42B7-BDB6-F92CF359535C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "..\TestProject1\TestProject1.csproj", "{7C16A102-EF4A-4803-95F6-BF3631EBA1AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "..\TestProject1\tests.csproj", "{7C16A102-EF4A-4803-95F6-BF3631EBA1AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

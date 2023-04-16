@@ -38,16 +38,25 @@ Api.GetTodaySearches("US");
 
 
 ## Related queries
-Get all trending searches.
+Get all Related queries.
 You can enter a query, filter by category, time, country, and group for search ('images', 'news', etc.). For example:
 ```csharp
-Api.GetRelatedQueries (new string[] { "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube ,3);
+Api.GetRelatedQueries(new string[] { "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube ,3);
 ```
 
 Also, you can also not enter any query, and just search according to the other categories:
 ```csharp
- Api.GetRelatedQueries (new string[] { "" }, "US", DateOptions.LastThreeMonths);
+ Api.GetRelatedQueries(new string[] { "" }, "US", DateOptions.LastThreeMonths);
 ```
+
+
+## Related topics
+Get all related topics of query.
+You can enter a query, filter by parameters. For example:
+```csharp
+Api.GetRelatedTopics(new string[] { "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube ,14);
+```
+
 
 ## Categories list
 
