@@ -63,11 +63,6 @@ internal class TrendsGetData
         token = RespondSolicitud.widgets[0].token;
     }
 
-    //public async Task<string> getTrendsJsonResponseAsync()
-    //{
-    //    Uri dataUri = new Uri($"{baseUrl}multiline/json?req={JsonSerializer.Serialize(this)}&token={token}&tz=300&cat=3");
-    //    return await new TrendsUtility().GetData(dataUri);
-    //}
 
     public class ComparisonItem
     {
