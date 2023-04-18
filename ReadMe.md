@@ -11,13 +11,22 @@ This is a library for receiving data from trends into the .net environment, easi
 ## Get trends
 You simply call the function like this:
 ```csharp
-Api.FetchData(new[] { "react", "angular" });
+Api.GetInterestOverTime(new[] { "react", "angular" });
 ```
 
 And also possible with parameters:
 ```csharp
-Api.FetchData(new[] { "react", "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube);
+Api.FetchData(new[] { "react", "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube, 14);
 ```
+
+## Get trends by region
+Get all trends, divided by regions:
+```csharp
+Api.GetInterestByRegion(new string[] { "Vue" }, DateOptions.LastThreeMonths, "CITY");
+```
+You can set the resolution as one of the following options:
+"DMA", "CITY", "REGION", and "COUNTRY".
+
 
 
 ## Trending searches
@@ -65,3 +74,11 @@ For get list of all categories, use:
 ```csharp
 Api.GetCategories();
 ```
+
+## Suggestions list
+
+For get list of all suggestions, use:
+```csharp
+Api.GetSuggestions("angula");
+```
+

@@ -278,7 +278,7 @@ public static class Api
     /// <param name="solicitud"></param>
     /// <param name="widget"> 1 for topics, 2 for queries.</param>
     /// <returns></returns>
-    public static async Task<JsonArray> GetRelated(Query solicitud, int widget)
+    private static async Task<JsonArray> GetRelated(Query solicitud, int widget)
     {
         var options = new string[] { "RELATED_TOPICS", "RELATED_QUERIES" };
 
