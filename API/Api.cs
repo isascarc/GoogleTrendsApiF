@@ -56,7 +56,6 @@ public static class Api
         var r3 = new TrendsGetData(r2);
         //----
         var r5 = JsonNode.Parse(r1)["widgets"][0];
-        //var r5 = r4["widgets"][0];
 
         // Get date
         Uri dataUri = new($"{interestOverTimeUrl}/json?req={JsonSerializer.Serialize(r3)}&token={r5["token"]}&tz={tz}");

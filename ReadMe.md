@@ -13,7 +13,7 @@ You simply call the function like this:
 ```csharp
 Api.GetInterestOverTime(new[] { "react", "angular" });
 ```
-  
+
 And also possible with parameters: 
 ```csharp
 Api.FetchData(new[] { "react", "angular" }, "US", DateOptions.LastThreeMonths, GroupOptions.youtube, 14);
