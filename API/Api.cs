@@ -45,7 +45,7 @@ public static class Api
     /// <exception cref="Exception"></exception>
     public static async Task<JsonNode> GetInterestOverTime(string[] keyword, string geo = "", DateOptions time = DateOptions.LastHour,
         GroupOptions group = GroupOptions.All, int category = 0, string hl = "en-US", string tz = "300")
-    { 
+    {  
         // Get token
         var query = new Query(geo, time.GetDescription(), keyword, category, group.GetDescription());
         var r1 = await GetCookiesAndData(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(query)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
