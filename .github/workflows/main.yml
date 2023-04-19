@@ -1,4 +1,4 @@
-name: Publish NuGet Package V2
+name: Publish NuGet Package2
 
 on:
   push:
@@ -14,7 +14,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - name: Setting up build version
+        run: |
+          $version = "1.0.{0:#}" -f $($Env:GITHUB_RUN_NUMBER)
+          echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v2
         with:
@@ -22,4 +26,9 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
-      
+
+      - name: Build the NuGet package
+        run: dotnet pack --configuration Release --output ${{env.DOTNET_ROOT}}\Package
+
+      - name: Publish NuGet Package
+        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg --api-key  oy2nlie2juevo23nrjdavzghixuc6mvuliqaeaax2tbukm --source https://api.nuget.org/v3/index.json
