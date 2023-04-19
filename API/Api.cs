@@ -49,8 +49,7 @@ public static class Api
         // Get token
         var query = new Query(geo, time.GetDescription(), keyword, category, group.GetDescription());
         var r1 = await GetCookiesAndData(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(query)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
-        if (r1.Length < 1)
-            throw new Exception("Something went wrong");
+
             
         var r2 = JsonSerializer.Deserialize<TrendsRespond>(r1);
         var r3 = new TrendsGetData(r2);
