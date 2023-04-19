@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include=".github\workflows\main.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="ReadMe.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
