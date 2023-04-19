@@ -9,71 +9,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static GoogleTrendsApi.TrendsRespond;
-using static System.Net.WebRequestMethods;
-using static GoogleTrendsApi.TrendsGetData;
+
 
 namespace GoogleTrendsApi;
-
-#region searchOptions
-
-// These are all the options offered by Google trends.
-public enum DateOptions
-{
-    [Description("now 1-H")]
-    LastHour,
-    [Description("now 4-H")]
-    LastFourHours,
-    [Description("now 1-d")]
-    LastDay,
-    [Description("now 7-d")]
-    LastWeek,
-    [Description("today 1-m")]
-    LastMonth,
-    [Description("today 3-m")]
-    LastThreeMonths,
-    [Description("today 12-m")]
-    LastYear,
-    [Description("today 5-y")]
-    LastFiveYears,
-    [Description("all")]
-    FromStart,
-}
-
-public enum GroupOptions
-{
-    [Description("")]
-    All,
-    [Description("images")]
-    images,
-    [Description("news")]
-    news,
-    [Description("youtube")]
-    youtube,
-    [Description("froogle")]
-    froogle
-}
-
-public enum Category
-{
-    [Description("all")]
-    All,
-    [Description("e")]
-    Entertainment,
-    [Description("b")]
-    Business,
-    [Description("t")]
-    ScienceAndTech,
-    [Description("m")]
-    Health,
-    [Description("s")]
-    Sports,
-    [Description("h")]
-    TopStories,
-}
-
-#endregion
 
 public static class Api
 {
@@ -117,8 +55,8 @@ public static class Api
         var r2 = JsonSerializer.Deserialize<TrendsRespond>(r1);
         var r3 = new TrendsGetData(r2);
         //----
-        var r4 = JsonNode.Parse(r1);
-        var r5 = r4["widgets"][0];
+        var r5 = JsonNode.Parse(r1)["widgets"][0];
+        //var r5 = r4["widgets"][0];
 
         // Get date
         Uri dataUri = new($"{interestOverTimeUrl}/json?req={JsonSerializer.Serialize(r3)}&token={r5["token"]}&tz={tz}");
@@ -145,24 +83,17 @@ public static class Api
     public async static Task<JsonArray> GetRealtimeSearches(string geo = "US", Category cat = Category.ScienceAndTech, int count = 300)
     {
         // Don't know what some of the params mean here, followed the nodejs library https://github.com/pat310/google-trends-api/ 's implemenration.
-        int ri_value = 300;
-        if (count < ri_value)
-            ri_value = count;
+        int riValue = 300;
+        if (count < riValue)
+            riValue = count;
 
-        int rs_value = 200;
-        if (count < rs_value)
-            rs_value = count - 1;
+        int rsValue = 200;
+        if (count < rsValue)
+            rsValue = count - 1;
 
         // Get date
-        var r1 = await GetCookiesAndData(new Uri($"{realtimeTrendingSearchesUrl}?ns=15&geo={geo}&tz=-300&hl=en-US&cat={cat.GetDescription()}&fi=0&fs=0&ri={ri_value}&rs={rs_value}&sort=0"), NormalCharsToTrim);
-        var r2 = JsonNode.Parse(r1)["storySummaries"]["trendingStories"].AsArray();
-        return r2;
-
-        // For return short results:
-        var wanted_keys = new string[] { "entityNames", "title" };
-
-        var result = await GetAllTrendingSearches();
-        return result.ContainsKey(geo) ? result[geo].AsArray() : new JsonArray();
+        var r1 = await GetCookiesAndData(new Uri($"{realtimeTrendingSearchesUrl}?ns=15&geo={geo}&tz=-300&hl=en-US&cat={cat.GetDescription()}&fi=0&fs=0&ri={riValue}&rs={rsValue}&sort=0"), NormalCharsToTrim);
+        return JsonNode.Parse(r1)["storySummaries"]["trendingStories"].AsArray();
     }
 
     /// <summary>
