@@ -51,10 +51,10 @@ public static class Api
         var r1 = await GetCookiesAndData(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(query)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
         if (r1.Length < 1)
             throw new Exception("Something went wrong");
-
+            
         var r2 = JsonSerializer.Deserialize<TrendsRespond>(r1);
         var r3 = new TrendsGetData(r2);
-        //----
+        
         var r5 = JsonNode.Parse(r1)["widgets"][0];
 
         // Get date
