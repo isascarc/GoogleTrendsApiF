@@ -117,7 +117,7 @@ public static class Api
     public static async Task<JsonNode> GetInterestByRegion(string[] keywords, DateOptions date, string resolution = "COUNTRY", string geo = "US",
         bool inc_low_vol = false, int cat = 0, GroupOptions groupOptions = GroupOptions.All, bool inc_geo_code = false, int tz = 300)
     {
-        // Get widget
+        // Get Region widget
         var query = new Query(geo, date.GetDescription(), keywords, cat, groupOptions.GetDescription());
         var res1 = await GetTokens(query, 1);
 
