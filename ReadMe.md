@@ -1,5 +1,6 @@
 ﻿
 # Google trends API 2.3.1
+[![Publish NuGet Package](https://github.com/isascarc/GoogleTrendsApiF/actions/workflows/mainCI.yml/badge.svg)](https://github.com/isascarc/GoogleTrendsApiF/actions/workflows/mainCI.yml)
 [![NuGet version (GoogleTrendsApi)](https://img.shields.io/nuget/v/GoogleTrendsApi.svg)](https://www.nuget.org/packages/GoogleTrendsApi/)
 [![NuGet version (GoogleTrendsApi)](https://img.shields.io/nuget/dt/GoogleTrendsApi.svg)](https://www.nuget.org/packages/GoogleTrendsApi/)
 

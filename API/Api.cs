@@ -45,19 +45,17 @@ public static class Api
     /// <exception cref="Exception"></exception>
     public static async Task<JsonNode> GetInterestOverTime(string[] keyword, string geo = "", DateOptions time = DateOptions.LastHour,
         GroupOptions group = GroupOptions.All, int category = 0, string hl = "en-US", string tz = "300")
-    {  
+    {
         // Get token
         var query = new Query(geo, time.GetDescription(), keyword, category, group.GetDescription());
         var r1 = await GetCookiesAndData(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(query)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
 
-            
-        var r2 = JsonSerializer.Deserialize<TrendsRespond>(r1);
-        var r3 = new TrendsGetData(r2);
-        
-        var r5 = JsonNode.Parse(r1)["widgets"][0];
+        var r2 = new TrendsGetData(JsonSerializer.Deserialize<TrendsRespond>(r1));
+        var r3 = JsonNode.Parse(r1)["widgets"][0];
 
         // Get date
-        Uri dataUri = new($"{interestOverTimeUrl}/json?req={JsonSerializer.Serialize(r3)}&token={r5["token"]}&tz={tz}");
+        Uri dataUri = new($"{interestOverTimeUrl}/json?req={JsonSerializer.Serialize(r2)}&token={r3["token"]}&tz={tz}");
+        var aaa = await GetData(dataUri);
         return JsonNode.Parse(await GetData(dataUri));
     }
 
