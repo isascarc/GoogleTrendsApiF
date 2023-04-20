@@ -15,11 +15,7 @@
     <RepositoryUrl>https://github.com/isascarc/GoogleTrends/tree/master/GoogleTrendsApi</RepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove=".knuke\**" />
-    <EmbeddedResource Remove=".knuke\**" />
-    <None Remove=".knuke\**" />
-  </ItemGroup>
+  
 
   <ItemGroup>
     <None Update="ReadMe.md">
