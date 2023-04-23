@@ -27,6 +27,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Test with dotnet
+        run: dotnet test --logger trx --results-directory "TestResults-1"
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-results-1
+          path: TestResults-1
+          
       - name: Build the NuGet package
         run: dotnet pack --configuration Release --output ${{env.DOTNET_ROOT}}\Package
 
