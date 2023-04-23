@@ -17,7 +17,7 @@ public class Tests
         Assert.That(t2, Is.Not.Null);
 
         var t3 = Api.GetTrendingSearches("israel").Result;
-        Assert.That(t3, Has.Count.GreaterThan(1));
+        Assert.That(t3, Has.Count.GreaterThan(10));
 
         var t4 = Api.GetCategories().Result;
         Assert.That(t4, Is.Not.Null);
