@@ -41,7 +41,7 @@ internal class TrendsGetData
         // Add all expressions to list.
         foreach (var item in req.comparisonItem)
         {
-            ComparisonItem comparisonItem = new ComparisonItem();
+            ComparisonItem comparisonItem = new ();
             Geo mygeo = new Geo();
             mygeo.country = item.geo.country;
             comparisonItem.geo = mygeo;
