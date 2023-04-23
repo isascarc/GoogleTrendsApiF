@@ -147,8 +147,8 @@ public static class Api
     /// <param name="tz"></param>
     /// <param name="geo"></param>
     /// <returns></returns>
-    public static async Task GetInterestOverTime(string hl = "en-US", int tz = 300, string geo = "GLOBAL")
-    {
+    //public static async Task GetInterestOverTime(string hl = "en-US", int tz = 300, string geo = "GLOBAL")
+    //{
         //var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
         //   $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), 4);
 
@@ -158,7 +158,7 @@ public static class Api
         //var res = await GetCookiesAndData(new Uri
         //    ($"{INTEREST_OVER_TIME_URL}?req=false&token={yearNumber}&tz={tz}"), NormalCharsToTrim);
         //return JsonNode.Parse(res)["topCharts"].AsArray();
-    }
+    //}
 
     /// <summary>
     /// For geoMap - take one only.
