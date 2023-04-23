@@ -59,6 +59,10 @@ public static class Api
         return JsonNode.Parse(await GetData(dataUri));
     }
 
+    public static async Task<JsonNode> GetInterestOverTimeTyped(string[] keyword, string geo = "", DateOptions time = DateOptions.LastHour,
+        GroupOptions group = GroupOptions.All, int category = 0, string hl = "en-US", string tz = "300")
+    => await GetInterestOverTime(keyword, geo, time, group, category, hl, tz);
+
     public async static Task<JsonObject> GetAllTrendingSearches()
     {
         var r = await GetCookiesAndData(new Uri(trendingSearchesUrl));
@@ -270,7 +274,7 @@ public static class Api
         }
     }
 
-    public static async Task<string> GetData(Uri url, CookieContainer cookies = null, bool trim = true)
+    private static async Task<string> GetData(Uri url, CookieContainer cookies = null, bool trim = true)
     {
         using (var handler = new HttpClientHandler() { CookieContainer = cookies ?? new CookieContainer() })
         using (var client = new HttpClient(handler) { })
@@ -286,7 +290,7 @@ public static class Api
         }
     }
 
-    public static string GetDataFinal(string data)
+    private static string GetDataFinal(string data)
     {
         using (Stream st = GenerateStreamFromString(data))
         {
@@ -296,7 +300,7 @@ public static class Api
         }
     }
 
-    public static MemoryStream GenerateStreamFromString(string value)
+    private static MemoryStream GenerateStreamFromString(string value)
         => new(Encoding.UTF8.GetBytes(value ?? ""));
 
 
