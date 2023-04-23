@@ -18,6 +18,8 @@ jobs:
         run: |
           $version = "1.0.{0:#}" -f $($Env:GITHUB_RUN_NUMBER)
           echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          echo  "ggf" 
+          echo ${{secrets.NUGETKEY}}
           
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v2
@@ -38,5 +40,5 @@ jobs:
       - name: Build the NuGet package
         run: dotnet pack --configuration Release --output ${{env.DOTNET_ROOT}}\Package
 
-      - name: Publish NuGet Package     
-        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg  --source 'https://api.nuget.org/v3/index.json' --skip-duplicate
+      - name: Publish NuGet Package
+        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg  --source 'https://api.nuget.org/v3/index.json' --api-key oy2alhnihkqvop4hrxjqlma54kzasoweni6biqxdukf7oe --skip-duplicate
