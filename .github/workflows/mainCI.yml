@@ -39,4 +39,4 @@ jobs:
         run: dotnet pack --configuration Release --output ${{env.DOTNET_ROOT}}\Package
 
       - name: Publish NuGet Package
-        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg  --source 'https://api.nuget.org/v3/index.json' --api-key  --skip-duplicate
+        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg  --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.nuGetK}}  --skip-duplicate
