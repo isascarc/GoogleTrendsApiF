@@ -1,4 +1,5 @@
 using GoogleTrendsApi;
+using NUnit.Framework;
 
 namespace tester;
 
@@ -21,5 +22,8 @@ public class Tests
 
         var t4 = Api.GetCategories().Result;
         Assert.That(t4, Is.Not.Null);
+
+        var t5 = Api.GetInterestOverTimeTyped(new string[] { "angular" }, GeoId.Israel, DateOptions.LastThreeMonths, GroupOptions.All).Result;
+        Assert.That(t5, Is.Not.Null);
     }
 }

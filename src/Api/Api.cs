@@ -59,9 +59,9 @@ public static class Api
         return JsonNode.Parse(await GetData(dataUri));
     }
 
-    public static async Task<JsonNode> GetInterestOverTimeTyped(string[] keyword, string geo = "", DateOptions time = DateOptions.LastHour,
-        GroupOptions group = GroupOptions.All, int category = 0, string hl = "en-US", string tz = "300")
-    => await GetInterestOverTime(keyword, geo, time, group, category, hl, tz);
+    public static async Task<JsonNode> GetInterestOverTimeTyped(string[] keyword, GeoId geo, DateOptions time, GroupOptions group,
+        int category = 0, string hl = "en-US", string tz = "300")
+        => await GetInterestOverTime(keyword, geo.GetDescription(), time, group, category, hl, tz);
 
     public async static Task<JsonObject> GetAllTrendingSearches()
     {
@@ -149,15 +149,15 @@ public static class Api
     /// <returns></returns>
     //public static async Task GetInterestOverTime(string hl = "en-US", int tz = 300, string geo = "GLOBAL")
     //{
-        //var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
-        //   $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), 4);
+    //var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
+    //   $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), 4);
 
-        //var widgets = JsonNode.Parse(_res)["widgets"].AsArray();
-        //var res1 = widgets.FirstOrDefault(x => x["id"].ToString() == options[widget]);
+    //var widgets = JsonNode.Parse(_res)["widgets"].AsArray();
+    //var res1 = widgets.FirstOrDefault(x => x["id"].ToString() == options[widget]);
 
-        //var res = await GetCookiesAndData(new Uri
-        //    ($"{INTEREST_OVER_TIME_URL}?req=false&token={yearNumber}&tz={tz}"), NormalCharsToTrim);
-        //return JsonNode.Parse(res)["topCharts"].AsArray();
+    //var res = await GetCookiesAndData(new Uri
+    //    ($"{INTEREST_OVER_TIME_URL}?req=false&token={yearNumber}&tz={tz}"), NormalCharsToTrim);
+    //return JsonNode.Parse(res)["topCharts"].AsArray();
     //}
 
     /// <summary>
