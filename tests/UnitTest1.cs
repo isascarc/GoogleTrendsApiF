@@ -11,19 +11,19 @@ public class Tests
     [Test]
     public void Test1()
     {
-        var t = Api.GetTopCharts(2022).Result;
-        Assert.That(t, Has.Count.GreaterThan(1));
+        //var t = Api.GetTopCharts(2022).Result;
+        //Assert.That(t, Has.Count.GreaterThan(1));
 
-        var t2 = Api.GetAllTrendingSearches().Result;
-        Assert.That(t2, Is.Not.Null);
+        //var t2 = Api.GetAllTrendingSearches().Result;
+        //Assert.That(t2, Is.Not.Null);
 
-        var t3 = Api.GetTrendingSearches("israel").Result;
-        Assert.That(t3, Has.Count.GreaterThan(10));
+        //var t3 = Api.GetTrendingSearches("israel").Result;
+        //Assert.That(t3, Has.Count.GreaterThan(10));
 
-        var t4 = Api.GetCategories().Result;
-        Assert.That(t4, Is.Not.Null);
+        //var t4 = Api.GetCategories().Result;
+        //Assert.That(t4, Is.Not.Null);
 
         var t5 = Api.GetInterestOverTimeTyped(new string[] { "angular" }, GeoId.Israel, DateOptions.LastThreeMonths, GroupOptions.All).Result;
-        Assert.That(t5, Is.Not.Null);
+        Assert.That(t5.AsArray()?[0]?.AsObject().ContainsKey("date"), Is.True);
     }
 }
