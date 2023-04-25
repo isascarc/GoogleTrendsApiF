@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace GoogleTrendsApi;
 
 
-/// <summary>
-/// These are all the options offered by Google trends.
-/// </summary>
 public enum DateOptions
 {
     [Description("now 1-H")]
