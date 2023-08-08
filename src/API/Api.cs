@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-
 namespace GoogleTrendsApi;
 
 public static class Api
