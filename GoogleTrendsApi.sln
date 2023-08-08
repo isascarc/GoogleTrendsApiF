@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleTrendsApi", "src\GoogleTrendsApi.csproj", "{13755A90-7231-4098-B055-C03930346F17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tester", "tester2\tester.csproj", "{F755DCC1-E90A-48F5-9FD7-664D6142392D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tester", "tests\tester.csproj", "{FE43A49B-AE5B-417F-ADA6-FE346396B101}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FC2965A-75A1-40A8-A70A-7B6FCD27D084}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,10 +22,10 @@ Global
 		{13755A90-7231-4098-B055-C03930346F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13755A90-7231-4098-B055-C03930346F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13755A90-7231-4098-B055-C03930346F17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F755DCC1-E90A-48F5-9FD7-664D6142392D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F755DCC1-E90A-48F5-9FD7-664D6142392D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F755DCC1-E90A-48F5-9FD7-664D6142392D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F755DCC1-E90A-48F5-9FD7-664D6142392D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE43A49B-AE5B-417F-ADA6-FE346396B101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE43A49B-AE5B-417F-ADA6-FE346396B101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE43A49B-AE5B-417F-ADA6-FE346396B101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE43A49B-AE5B-417F-ADA6-FE346396B101}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
