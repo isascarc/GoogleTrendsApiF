@@ -1,6 +1,4 @@
-﻿using static GoogleTrendsApi.Api;
-
-namespace GoogleTrendsApi;
+﻿namespace GoogleTrendsApi;
 
 public class Query
 {

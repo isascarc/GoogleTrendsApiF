@@ -13,7 +13,6 @@
     <Authors>Isascar chatav</Authors>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/isascarc/GoogleTrends/tree/master/GoogleTrendsApi</RepositoryUrl>
-    <PackageReleaseNotes>Added support for .NET 6</PackageReleaseNotes>
   </PropertyGroup>
 
   
