@@ -1,10 +1,4 @@
-﻿global using System;
-global using System.Text.Json;
-global using System.Threading.Tasks;
-global using System.Collections.Generic;
-global using System.Net;
-global using System.Net.Http;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
