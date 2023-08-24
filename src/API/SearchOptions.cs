@@ -3,9 +3,6 @@
 namespace GoogleTrendsApi;
 
 
-/// <summary>
-/// These are all the options offered by Google trends.
-/// </summary>
 public enum DateOptions
 {
     [Description("now 1-H")]
