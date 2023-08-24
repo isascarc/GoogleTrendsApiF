@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace GoogleTrendsApi;
-
+﻿namespace GoogleTrendsApi;
 
 public enum DateOptions
 {
