@@ -27,8 +27,16 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Test with dotnet
+        run: dotnet test --logger trx --results-directory "TestResults-1"
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-results-1
+          path: TestResults-1
+          
       - name: Build the NuGet package
         run: dotnet pack --configuration Release --output ${{env.DOTNET_ROOT}}\Package
 
       - name: Publish NuGet Package
-        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg --api-key  oy2nlie2juevo23nrjdavzghixuc6mvuliqaeaax2tbukm --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg  --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.nuGetK}}  --skip-duplicate
