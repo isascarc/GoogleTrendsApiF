@@ -13,9 +13,7 @@
     <Authors>Isascar chatav</Authors>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/isascarc/GoogleTrends/tree/master/GoogleTrendsApi</RepositoryUrl>
-  </PropertyGroup>
-
-  
+  </PropertyGroup>  
 
   <ItemGroup>
     <None Update="ReadMe.md">
@@ -27,9 +25,4 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include=".github\workflows\" />
-  </ItemGroup>
-
 </Project>

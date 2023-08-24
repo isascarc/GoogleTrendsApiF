@@ -4,7 +4,7 @@ global using System.Threading.Tasks;
 global using System.Collections.Generic;
 global using System.Net;
 global using System.Net.Http;
-﻿using System.Text.Json.Nodes;
+using System.Text.Json.Nodes;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -44,7 +44,7 @@ public static class Api
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public static async Task<JsonNode> GetInterestOverTime(string[] keywords, string geo = "", DateOptions time = DateOptions.LastHour,
-        GroupOptions group = GroupOptions.All, int category = 0, string hl = "en-US", string tz = "300")
+            GroupOptions group = GroupOptions.All, int category = 0, string hl = "en-US", string tz = "300")
     {
         ArgumentNullException.ThrowIfNull(keywords);
 
@@ -169,19 +169,14 @@ public static class Api
     /// <param name="solicitud"></param>
     /// <param name="widget"></param>
     /// <returns></returns>
-    public static async Task<JsonNode> GetTokens(Query solicitud, int widget)
+    private static async Task<JsonNode> GetTokens(Query solicitud, int widget, string hl = "en-US", int tz = 300)
     {
         var options = new string[] { "TIMESERIES", "GEO_MAP" };
 
-        var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
-           $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), NormalCharsToTrim);
-
-
-        var widgets = JsonNode.Parse(_res)["widgets"].AsArray();
-        return widgets.FirstOrDefault(x => x["id"].ToString() == options[widget]);
+        var res = await GetCookiesAndDataAsJson(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(solicitud)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
+        return res["widgets"].AsArray()
+            .FirstOrDefault(x => x["id"].ToString() == options[widget]);
     }
-
-
 
     /// <summary>
     /// Request data from Google Daily Trends section.
@@ -189,8 +184,8 @@ public static class Api
     /// <returns></returns>       
     public static async Task<JsonArray> GetTodaySearches(string geo = "US", string hl = "en-US")
     {
-        var res = await GetCookiesAndData(new Uri($"{todaySearchesUrl}?ns=15&geo={geo}&tz=-180&hl={hl}"), NormalCharsToTrim); //title.query
-        return JsonNode.Parse(res)?["default"]["trendingSearchesDays"][0]["trendingSearches"].AsArray();
+        var res = await GetCookiesAndDataAsJson(new Uri($"{todaySearchesUrl}?ns=15&geo={geo}&tz=-180&hl={hl}"), NormalCharsToTrim);
+        return res["default"]["trendingSearchesDays"][0]["trendingSearches"].AsArray();
     }
 
 
@@ -216,14 +211,14 @@ public static class Api
     {
         var options = new string[] { "RELATED_TOPICS", "RELATED_QUERIES" };
 
-        var _res = await GetCookiesAndData(new Uri($"https://trends.google.com/trends/api/explore?req=" +
+        var _res = await GetCookiesAndData(new Uri($"{baseTrendsUrl}/api/explore?req=" +
            $"{JsonSerializer.Serialize(solicitud)}&hl=he-IL&tz=300"), NormalCharsToTrim);
 
         var widgets = JsonNode.Parse(_res)["widgets"].AsArray();
         var res1 = widgets.FirstOrDefault(x => x["id"].ToString() == options[widget]);
 
-        var relateds = await GetCookiesAndData(new Uri(relatedQueriesUrl + $"?token={res1["token"]}&req={res1["request"]}"), NormalCharsToTrim);
-        return JsonNode.Parse(relateds)["default"]["rankedList"].AsArray();
+        var relateds = await GetCookiesAndDataAsJson(new Uri(relatedQueriesUrl + $"?token={res1["token"]}&req={res1["request"]}"), NormalCharsToTrim);
+        return relateds["default"]["rankedList"].AsArray();
     }
 
 
@@ -249,8 +244,13 @@ public static class Api
     }
 
 
+    private static async Task<JsonNode> GetCookiesAndDataAsJson(Uri url, int trimChars = 0)
+    {
+        var data = await GetCookiesAndData(url, trimChars);
+        return JsonNode.Parse(data);
+    }
 
-    public static async Task<string> GetCookiesAndData(Uri url, int trimChars = 0)
+    private static async Task<string> GetCookiesAndData(Uri url, int trimChars = 0)
     {
         var cookieContainer = new CookieContainer();
 
@@ -295,16 +295,10 @@ public static class Api
 
     private static string GetDataFinal(string data)
     {
-        using (Stream st = GenerateStreamFromString(data))
-        {
-            var jsonReceived = JsonNode.Parse(st)["default"]["timelineData"];
-            var jsonResult = jsonReceived.AsArray().Select(x => new { date = x["time"], value = x["value"] });
-            return JsonSerializer.Serialize(jsonResult);
-        }
+        var jsonReceived = JsonNode.Parse(data)["default"]["timelineData"];
+        var jsonResult = jsonReceived.AsArray().Select(x => new { date = x["time"], value = x["value"] });
+        return JsonSerializer.Serialize(jsonResult);
     }
-
-    private static MemoryStream GenerateStreamFromString(string value)
-        => new(Encoding.UTF8.GetBytes(value ?? ""));
 
 
     /// <summary>
