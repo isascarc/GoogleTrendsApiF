@@ -1,26 +1,20 @@
-﻿using System.Text.Json.Nodes;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-namespace GoogleTrendsApi;
+﻿namespace GoogleTrendsApi;
 
 public static class Api
 {
     const string baseTrendsUrl = "https://trends.google.com/trends";
 
-    const string generalUrl = $"{baseTrendsUrl}/api/explore";
-    const string interestOverTimeUrl = $"{baseTrendsUrl}/api/widgetdata/multiline/json";
-    const string multyrangeInterestOverTimeUrl = $"{baseTrendsUrl}/api/widgetdata/multirange";
-    const string interestByRegionUrl = $"{baseTrendsUrl}/api/widgetdata/comparedgeo";
-    const string relatedQueriesUrl = $"{baseTrendsUrl}/api/widgetdata/relatedsearches";
-    const string trendingSearchesUrl = $"{baseTrendsUrl}/hottrends/visualize/internal/data";
-    const string topChartsUrl = $"{baseTrendsUrl}/api/topcharts";
-    const string suggestionsUrl = $"{baseTrendsUrl}/api/autocomplete/";
-    const string categoriesUrl = $"{baseTrendsUrl}/api/explore/pickers/category";
-    const string todaySearchesUrl = $"{baseTrendsUrl}/api/dailytrends";
-    const string realtimeTrendingSearchesUrl = $"{baseTrendsUrl}/api/realtimetrends";
+    const string GeneralUrl = $"{baseTrendsUrl}/api/explore";
+    const string InterestOverTimeUrl = $"{baseTrendsUrl}/api/widgetdata/multiline/json";
+    const string MultyrangeInterestOverTimeUrl = $"{baseTrendsUrl}/api/widgetdata/multirange";
+    const string InterestByRegionUrl = $"{baseTrendsUrl}/api/widgetdata/comparedgeo";
+    const string RelatedQueriesUrl = $"{baseTrendsUrl}/api/widgetdata/relatedsearches";
+    const string TrendingSearchesUrl = $"{baseTrendsUrl}/hottrends/visualize/internal/data";
+    const string TopChartsUrl = $"{baseTrendsUrl}/api/topcharts";
+    const string SuggestionsUrl = $"{baseTrendsUrl}/api/autocomplete/";
+    const string CategoriesUrl = $"{baseTrendsUrl}/api/explore/pickers/category";
+    const string TodaySearchesUrl = $"{baseTrendsUrl}/api/dailytrends";
+    const string RealtimeTrendingSearchesUrl = $"{baseTrendsUrl}/api/realtimetrends";
 
     const int NormalCharsToTrim = 5;
 
@@ -43,13 +37,13 @@ public static class Api
 
         // Get token
         var query = new Query(geo, time.GetDescription(), keywords, category, group.GetDescription());
-        var r1 = await GetCookiesAndData(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(query)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
+        var r1 = await GetCookiesAndData(new Uri($"{GeneralUrl}?req={JsonSerializer.Serialize(query)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
 
         var r2 = new TrendsGetData(JsonSerializer.Deserialize<TrendsRespond>(r1));
         var token = JsonNode.Parse(r1)["widgets"][0]["token"].AsValue();
 
         // Get date
-        Uri dataUri = new($"{interestOverTimeUrl}?req={JsonSerializer.Serialize(r2)}&token={token}&tz={tz}");
+        Uri dataUri = new($"{InterestOverTimeUrl}?req={JsonSerializer.Serialize(r2)}&token={token}&tz={tz}");
         return JsonNode.Parse(await GetData(dataUri));
     }
 
@@ -62,7 +56,7 @@ public static class Api
 
 
     public async static Task<JsonObject> GetAllTrendingSearches()
-        => (await GetCookiesAndDataAsJson(new Uri(trendingSearchesUrl))).AsObject();
+        => (await GetCookiesAndDataAsJson(new Uri(TrendingSearchesUrl))).AsObject();
 
 
     public async static Task<JsonArray> GetTrendingSearches(string country = "united_states")
@@ -88,7 +82,7 @@ public static class Api
             rsValue = count - 1;
 
         // Get date
-        var r1 = await GetCookiesAndDataAsJson(new Uri($"{realtimeTrendingSearchesUrl}?ns=15&geo={geo}&tz=-300&hl=en-US&cat={cat.GetDescription()}&fi=0&fs=0&ri={riValue}&rs={rsValue}&sort=0"), NormalCharsToTrim);
+        var r1 = await GetCookiesAndDataAsJson(new Uri($"{RealtimeTrendingSearchesUrl}?ns=15&geo={geo}&tz=-300&hl=en-US&cat={cat.GetDescription()}&fi=0&fs=0&ri={riValue}&rs={rsValue}&sort=0"), NormalCharsToTrim);
         return r1["storySummaries"]["trendingStories"].AsArray();
     }
 
@@ -102,7 +96,7 @@ public static class Api
     /// <returns>An array that contains a list of objects, such as: Searches, News, People, and many more.</returns>
     public static async Task<JsonArray> GetTopCharts(int yearNumber, string hl = "en-US", int tz = 300, string geo = "GLOBAL")
     {
-        var res = await GetCookiesAndDataAsJson(new Uri($"{topChartsUrl}?isMobile=false&date={yearNumber}&geo={geo}&tz={tz}&hl={hl}"), NormalCharsToTrim);
+        var res = await GetCookiesAndDataAsJson(new Uri($"{TopChartsUrl}?isMobile=false&date={yearNumber}&geo={geo}&tz={tz}&hl={hl}"), NormalCharsToTrim);
         return res["topCharts"].AsArray();
     }
 
@@ -126,7 +120,7 @@ public static class Api
             res1["request"]["resolution"] = resolution;
         res1["request"]["includeLowSearchVolumeGeos"] = inc_low_vol;
 
-        Uri regionUrl = new($"{interestByRegionUrl}?req={JsonSerializer.Serialize(res1["request"])}&token={res1["token"]}&tz={tz}");
+        Uri regionUrl = new($"{InterestByRegionUrl}?req={JsonSerializer.Serialize(res1["request"])}&token={res1["token"]}&tz={tz}");
         var res = JsonNode.Parse(await GetCookiesAndData(regionUrl, NormalCharsToTrim));
 
         return res;
@@ -166,7 +160,7 @@ public static class Api
     {
         var options = new string[] { "TIMESERIES", "GEO_MAP" };
 
-        var res = await GetCookiesAndDataAsJson(new Uri($"{generalUrl}?req={JsonSerializer.Serialize(solicitud)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
+        var res = await GetCookiesAndDataAsJson(new Uri($"{GeneralUrl}?req={JsonSerializer.Serialize(solicitud)}&hl={hl}&tz={tz}"), NormalCharsToTrim);
         return res["widgets"].AsArray()
             .FirstOrDefault(x => x["id"].ToString() == options[widget]);
     }
@@ -177,7 +171,7 @@ public static class Api
     /// <returns></returns>       
     public static async Task<JsonArray> GetTodaySearches(string geo = "US", string hl = "en-US")
     {
-        var res = await GetCookiesAndDataAsJson(new Uri($"{todaySearchesUrl}?ns=15&geo={geo}&tz=-180&hl={hl}"), NormalCharsToTrim);
+        var res = await GetCookiesAndDataAsJson(new Uri($"{TodaySearchesUrl}?ns=15&geo={geo}&tz=-180&hl={hl}"), NormalCharsToTrim);
         return res["default"]["trendingSearchesDays"][0]["trendingSearches"].AsArray();
     }
 
@@ -210,7 +204,7 @@ public static class Api
         var widgets = JsonNode.Parse(_res)["widgets"].AsArray();
         var res1 = widgets.FirstOrDefault(x => x["id"].ToString() == options[widget]);
 
-        var relateds = await GetCookiesAndDataAsJson(new Uri(relatedQueriesUrl + $"?token={res1["token"]}&req={res1["request"]}"), NormalCharsToTrim);
+        var relateds = await GetCookiesAndDataAsJson(new Uri(RelatedQueriesUrl + $"?token={res1["token"]}&req={res1["request"]}"), NormalCharsToTrim);
         return relateds["default"]["rankedList"].AsArray();
     }
 
@@ -221,7 +215,7 @@ public static class Api
     /// <returns></returns>
     public static async Task<string> GetCategories(string hl = "en-US")
     {
-        return await GetCookiesAndData(new Uri($"{categoriesUrl}?hl={hl}"), NormalCharsToTrim);
+        return await GetCookiesAndData(new Uri($"{CategoriesUrl}?hl={hl}"), NormalCharsToTrim);
     }
 
     /// <summary>
@@ -232,7 +226,7 @@ public static class Api
     /// <returns></returns>
     public static async Task<JsonArray> GetSuggestions(string keyword, string hl = "en-US")
     {
-        var res = await GetCookiesAndData(new Uri($"{suggestionsUrl}{keyword}?hl={hl}"), NormalCharsToTrim);
+        var res = await GetCookiesAndData(new Uri($"{SuggestionsUrl}{keyword}?hl={hl}"), NormalCharsToTrim);
         return JsonNode.Parse(res)["default"]["topics"].AsArray();
     }
 
