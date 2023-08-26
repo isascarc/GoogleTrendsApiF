@@ -9,7 +9,7 @@
     <PackageTags>Trends; GoogleTrends;</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-    <Version>2.3.4</Version>
+    <Version>2.3.5</Version>
     <Authors>Isascar chatav</Authors>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/isascarc/GoogleTrends/tree/master/GoogleTrendsApi</RepositoryUrl>
