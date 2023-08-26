@@ -28,5 +28,8 @@ public class Tests
 
         var t5 = Api.GetInterestOverTimeTyped(new string[] { "angular" }, GeoId.Israel, DateOptions.LastThreeMonths, GroupOptions.All).Result;
         Assert.That(t5.AsArray()?[0]?.AsObject().ContainsKey("date"), Is.True);
+
+        var t7 = Api.GetInterestOverTime(new string[] { ".NET", "Java" }).Result;
+        Assert.That(t7, Is.Not.Null);
     }
 }

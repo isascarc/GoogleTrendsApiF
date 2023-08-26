@@ -47,8 +47,12 @@ public static class Api
         return JsonNode.Parse(await GetData(dataUri));
     }
 
+    public static async Task<JsonNode> GetInterestOverTime(string[] keywords)
+        => await GetInterestOverTime(keywords, "", DateOptions.LastHour, GroupOptions.All, 0, "en-US", "300");
+
+
     public static async Task<JsonNode> GetInterestOverTimeTyped(string[] keywords, GeoId geo, DateOptions time, GroupOptions group,
-        int category = 0, string hl = "en-US", string tz = "300")
+    int category = 0, string hl = "en-US", string tz = "300")
     {
         ArgumentNullException.ThrowIfNull(keywords);
         return await GetInterestOverTime(keywords, geo.GetDescription(), time, group, category, hl, tz);
